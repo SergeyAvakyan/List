@@ -13,6 +13,49 @@ namespace List
             _array = new int[10];
         }
 
+        public ArrayList(int value)
+        {
+            Length = 0;
+            _array = new int[10];
+            _array[0] = value;
+        }
+
+        public ArrayList(int[] value)
+        {
+            Length = value.Length;
+            _array = value;
+            UpSize();
+        }
+        public int this[int index]
+        {
+            get
+            {
+                return _array[index];
+            }
+            set
+            {
+                _array[index] = value;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            ArrayList list = (ArrayList)obj;
+            if (this.Length != list.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Length; i++)
+            {
+                if (this._array[i] != list._array[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         public void Add(int value)
         {
             if (Length == _array.Length)
@@ -38,7 +81,7 @@ namespace List
         {
 
         }
-        public void AddValueByIndex(int value)
+        public void AddValueByIndex(int index)
         {
 
         }
@@ -48,7 +91,13 @@ namespace List
         }
         public void RemoveOneElementFromTheBeginning(int value)
         {
+            for (int i = Length - 1; i >= 0; i--)
+            {
+                _array[i + 1] = _array[i];
+            }
 
+            Length--;
+            
         }
         public void RemoveOneElementByIndex(int value)
         {
