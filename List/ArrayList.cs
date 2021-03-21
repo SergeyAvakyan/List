@@ -5,26 +5,23 @@ namespace List
     public class ArrayList
     {
         public int Length { get; private set; }
-
         private int[] _array;
         public ArrayList()
         {
             Length = 0;
             _array = new int[10];
         }
-
         public ArrayList(int value)
         {
             Length = 0;
             _array = new int[10];
             _array[0] = value;
         }
-
         public ArrayList(int[] value)
         {
             Length = value.Length;
             _array = value;
-            UpSize();
+            Resize();
         }
         public int this[int index]
         {
@@ -37,7 +34,6 @@ namespace List
                 _array[index] = value;
             }
         }
-
         public override bool Equals(object obj)
         {
             ArrayList list = (ArrayList)obj;
@@ -53,175 +49,237 @@ namespace List
                     return false;
                 }
             }
-
             return true;
+        }
+        public override string ToString()
+        {
+            string result = string.Empty;
+            for (int i = 0; i < Length; i++)
+            {
+                result += _array[i] + " ";
+
+            }
+
+            result.Trim();
+            return result;
         }
         public void Add(int value)
         {
             if (Length == _array.Length)
             {
-                UpSize();
+                Resize();
             }
             _array[Length] = value;
             Length++;
         }
-
-        private void UpSize()
-        {
-            int newLength = (int)(_array.Length * 1.33d + 1);
-            int[] tmpArray = new int[newLength];
-
-            for (int i = 0; i < _array.Length; i++)
-            {
-                tmpArray[i] = _array[i];
-            }
-            _array = tmpArray;
-        }
         public void AddValueToBeginning(int value)
         {
+            Resize();
 
-        }
-        public void AddValueByIndex(int index)
-        {
-
-        }
-        public void RemoveOneElementFromTheEnd(int value)
-        {
-           
-        }
-        public void RemoveOneElementFromTheBeginning(int value)
-        {
             for (int i = Length - 1; i >= 0; i--)
             {
                 _array[i + 1] = _array[i];
             }
+            _array[0] = _array[value];
+            ++Length;
+        }
+        public void AddValueByIndex(int value, int index)
+        {
+            if (index <= Length && index >= 0)
+            {
 
+                if (Length >= _array.Length)
+                {
+                    Resize();
+                }
+
+                for (int i = Length - 1; i >= index; i--)
+                {
+                    _array[i + 1] = _array[i];
+                }
+                _array[index] = value;
+                ++Length;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+        public void RemoveOneElementFromTheEnd()
+        {
             Length--;
-            
-        }
-        public void RemoveOneElementByIndex(int value)
-        {
 
+            Resize();
         }
-        public void RemoveNElementsFromTheEnd(int value)
+        public void RemoveOneElementFromTheBeginning()
         {
-
+           
         }
-        public void RemoveNElementsFromTheBeginning(int value)
+        public void RemoveOneElementByIndex(int index)
         {
+            if (index < Length && index >= 0)
+            {
 
+                for (int i = index; i < Length; i++)
+                {
+                    _array[i] = _array[i + 1];
+                }
+
+                Length--;
+                Resize();
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
-        public void RemoveNElementsByIndex()
+        public void RemoveNElementsFromTheEnd(int Nvalue)
         {
+            if (Nvalue < Length && Nvalue >= 0)
+            {
+                Length -= Nvalue;
 
+                Resize();
+            }
         }
-        public void GetIndexAccess()
+        public void RemoveNElementsFromTheBeginning(int Nvalue)
         {
+            if (Nvalue < Length && Nvalue >= 0)
+            {
+                for (int i = Nvalue; i <= Length; i++)
+                {
+                    _array[i - Nvalue] = _array[i];
+                }
 
+                Length -= Nvalue;
+                Resize();
+            }
         }
-        public void GetFirstIndexByValue()
+        public void RemoveNElementsByIndex(int Nvalue, int Index)
         {
+            if (Index < Length && Index >= 0 && Length - Nvalue > 0)
+            {
 
+                for (int i = Index + Nvalue; i <= Length; i++)
+                {
+                    _array[i - Nvalue] = _array[i];
+                }
+
+                Length -= Nvalue;
+                Resize();
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
-        public void ChangeByIndex()
+        public int GetFirstIndexByValue(int value)
         {
+            for (int i = 0; i < Length; i++)
+            {
+                if (value == _array[i])
+                {
+                    return i;
+                }
+            }
 
+           return -1;
         }
+
         public void GetReverse()
         {
-            int[] result = new int[_array.Length];
-            int j = 0;
-            for (int i = _array.Length - 1; i >= 0; i--)
+           
+        }
+        public void FindTheValueOfTheMaxElement(int value)
+        {
+            
+        }
+        public void FindTheValueOfTheMinElement(int value)
+        {
+            
+        }
+        public int SearchIndexOfMaxElement(int value)
+        {
+            if (!(Length == 0))
             {
-                result[j] = _array[i];
-                j++;
+
+                int maxIndexOfElement = 0;
+
+                for (int i = 1; i < Length; i++)
+                {
+                    if (_array[maxIndexOfElement] < _array[i])
+                    {
+                        maxIndexOfElement = i;
+                    }
+                }
+
+                return maxIndexOfElement;
+            }
+            else
+            {
+                throw new ArgumentException();
             }
         }
-        public void FindTheValueOfTheMaxElement()
+        public int SearchIndexOfMinElement(int value)
         {
-            int max = _array[0];
-            for (int i = 1; i < _array.Length; i++)
+            if (!(Length == 0))
             {
-                if (max < _array[i])
+
+                int minIndexOfElement = 0;
+
+                for (int i = 1; i < Length; i++)
                 {
-                    max = _array[i];
+                    if (_array[minIndexOfElement] > _array[i])
+                    {
+                        minIndexOfElement = i;
+                    }
                 }
+
+                return minIndexOfElement;
             }
-        }
-        public void FindTheValueOfTheMinElement()
-        {
-            int min = _array[0];
-            for (int i = 1; i < _array.Length; i++)
+            else
             {
-                if (min > _array[i])
-                {
-                    min = _array[i];
-                }
-            }
-        }
-        public void SearchIndexOfMaxElement()
-        {
-            int max = _array[0];
-            for (int i = 1; i < _array.Length; i++)
-            {
-                if (max < _array[i])
-                {
-                    max = _array[i];
-                }
-            }
-        }
-        public void SearchIndexOfMinElement()
-        {
-            int min = _array[0];
-            int minIndex = 0;
-            for (int i = 1; i < _array.Length; i++)
-            {
-                if (min > _array[i])
-                {
-                    min = _array[i];
-                    minIndex = i;
-                }
+                throw new ArgumentException();
             }
         }
         public void GetSortAscending()
         {
-            for (int i = 0; i < _array.Length - 1; i++)
-            {
-                int min = i;
+            int j;
+            int temp;
 
-                if (min > _array[i])
+            for (int i = 1; i < Length; i++)
+            {
+                j = i;
+                temp = _array[i];
+
+                while (j > 0 && temp < _array[j - 1])
                 {
-                    min = _array[i];
+                    _array[j] = _array[j - 1];
+                    j--;
                 }
 
-                for (int j = i + 1; j < _array.Length; j++)
-                {
-                    if (_array[j] < _array[min])
-                    {
-                        min = j;
-                    }
-                }
-                int temp = _array[min];
-                _array[min] = _array[i];
-                _array[i] = temp;
-            }
-    }
-        public void GetDescendingSort()
-        {
-        for (int i = 1; i < _array.Length; i++)
-        {
-            int j = i;
-
-            while (j > 0 && _array[j] > _array[j - 1])
-            {
-                int temp = _array[j];
-                _array[j] = _array[j - 1];
-                _array[j - 1] = temp;
-
-                j--;
+                _array[j] = temp;
             }
         }
-    }
+        public void GetDescendingSort()
+        {
+            int j;
+            int temp;
+
+            for (int i = 1; i < Length; i++)
+            {
+                j = i;
+                temp = _array[i];
+
+                while (j > 0 && temp > _array[j - 1])
+                {
+                    _array[j] = _array[j - 1];
+                    j--;
+                }
+
+                _array[j] = temp;
+            }
+        }
         public void DeleteByValueOfTheFirst()
         {
 
@@ -241,6 +299,22 @@ namespace List
         public void AddListByIndex()
         {
 
+        }
+
+        private void Resize()
+        {
+            if (Length >= _array.Length)
+            {
+                int newLenght = (int)(Length * 1.33 + 1);
+                int[] tmpArray = new int[newLenght];
+
+                for (int i = 0; i < Length; i++)
+                {
+                    tmpArray[i] = _array[i];
+                }
+
+                _array = tmpArray;
+            }
         }
     }
 }
