@@ -6,5 +6,6 @@ namespace List.Tests
 {
     class LinkedListTests
     {
+
     }
 }
