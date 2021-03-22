@@ -17,77 +17,67 @@ namespace List
             _array = new int[10];
             _array[0] = value;
         }
-        public ArrayList(int[] value)
+        public ArrayList(int[] array)
         {
-            Length = value.Length;
-            _array = value;
+            if (array == null)
+            {
+                throw new ArgumentNullException();
+            }
+            Length = array.Length;
+            _array = array;
             Resize();
         }
         public int this[int index]
         {
             get
             {
-                return _array[index];
+                if (index < Length && index >= 0)
+                {
+                    return _array[index];
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
             }
             set
             {
-                _array[index] = value;
-            }
-        }
-        public override bool Equals(object obj)
-        {
-            ArrayList list = (ArrayList)obj;
-            if (this.Length != list.Length)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < Length; i++)
-            {
-                if (this._array[i] != list._array[i])
+                if (index < Length && index >= 0)
                 {
-                    return false;
+                    _array[index] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
                 }
             }
-            return true;
-        }
-        public override string ToString()
-        {
-            string result = string.Empty;
-            for (int i = 0; i < Length; i++)
-            {
-                result += _array[i] + " ";
-
-            }
-
-            result.Trim();
-            return result;
         }
         public void Add(int value)
         {
-            if (Length == _array.Length)
+            if (Length >= _array.Length)
             {
                 Resize();
             }
             _array[Length] = value;
-            Length++;
+            ++Length;
         }
-        public void AddValueToBeginning(int value)
+        public void AddValueToStrart(int value)
         {
-            Resize();
-
+            if (Length >= _array.Length)
+            {
+                Resize();
+            }
             for (int i = Length - 1; i >= 0; i--)
             {
                 _array[i + 1] = _array[i];
             }
-            _array[0] = _array[value];
+            _array[0] = value;
             ++Length;
         }
         public void AddValueByIndex(int value, int index)
         {
             if (index <= Length && index >= 0)
             {
-
                 if (Length >= _array.Length)
                 {
                     Resize();
@@ -105,15 +95,27 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
-        public void RemoveOneElementFromTheEnd()
+        public void RemoveOneElementFromLast()
         {
-            Length--;
-
+            if (!(Length == 0))
+            {
+                Length--;
+            }
             Resize();
         }
-        public void RemoveOneElementFromTheBeginning()
+        public void RemoveOneElementFromStart()
         {
-           
+            for (int i = 1; i <= Length; i++)
+            {
+                _array[i - 1] = _array[i];
+            }
+
+            if (!(Length == 0))
+            {
+                Length--;
+            }
+
+            Resize();
         }
         public void RemoveOneElementByIndex(int index)
         {
@@ -133,7 +135,7 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
-        public void RemoveNElementsFromTheEnd(int Nvalue)
+        public void RemoveNElementsFromLast(int Nvalue)
         {
             if (Nvalue < Length && Nvalue >= 0)
             {
@@ -142,7 +144,7 @@ namespace List
                 Resize();
             }
         }
-        public void RemoveNElementsFromTheBeginning(int Nvalue)
+        public void RemoveNElementsFromStart(int Nvalue)
         {
             if (Nvalue < Length && Nvalue >= 0)
             {
@@ -185,20 +187,20 @@ namespace List
 
            return -1;
         }
-
         public void GetReverse()
         {
-           
+            int temp;
+            int swapIndex;
+
+            for (int i = 0; i < Length / 2; i++)
+            {
+                swapIndex = Length - i - 1;
+                temp = _array[i];
+                _array[i] = _array[swapIndex];
+                _array[swapIndex] = temp;
+            }
         }
-        public void FindTheValueOfTheMaxElement(int value)
-        {
-            
-        }
-        public void FindTheValueOfTheMinElement(int value)
-        {
-            
-        }
-        public int SearchIndexOfMaxElement(int value)
+        public int GetIndexMaxElement()
         {
             if (!(Length == 0))
             {
@@ -220,7 +222,7 @@ namespace List
                 throw new ArgumentException();
             }
         }
-        public int SearchIndexOfMinElement(int value)
+        public int GetIndexOfMinElement()
         {
             if (!(Length == 0))
             {
@@ -241,6 +243,14 @@ namespace List
             {
                 throw new ArgumentException();
             }
+        }
+        public int GetValueMaxElement()
+        {
+            return GetIndexMaxElement();
+        }
+        public int GetValueMinElement()
+        {
+            return GetIndexOfMinElement();
         }
         public void GetSortAscending()
         {
@@ -280,13 +290,23 @@ namespace List
                 _array[j] = temp;
             }
         }
-        public void DeleteByValueOfTheFirst()
+        public void RemoveByValueOfTheFirst(int value)
         {
+            int index = GetFirstIndexByValue(value);
 
+            if (!(index == -1))
+            {
+                RemoveOneElementByIndex(index);
+            }
         }
-        public void DeleteByValueAll()
+        public void RemoveByValueAll(int value)
         {
-
+            int indexOfElements = GetFirstIndexByValue(value);
+            while (indexOfElements != -1)
+            {
+                RemoveOneElementByIndex(indexOfElements);
+                indexOfElements = GetFirstIndexByValue(value);
+            }
         }
         public void AddListToTheEnd()
         {
@@ -315,6 +335,36 @@ namespace List
 
                 _array = tmpArray;
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            ArrayList list = (ArrayList)obj;
+            if (this.Length != list.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Length; i++)
+            {
+                if (this._array[i] != list._array[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public override string ToString()
+        {
+            string result = string.Empty;
+            for (int i = 0; i < Length; i++)
+            {
+                result += _array[i] + " ";
+
+            }
+
+            result.Trim();
+            return result;
         }
     }
 }
