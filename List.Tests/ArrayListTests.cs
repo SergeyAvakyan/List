@@ -242,5 +242,52 @@ namespace List.Tests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestCase(new int[] { 1, 2, 3 }, 2, new int[] { 4, 5, 6 }, new int[] { 1, 2, 4, 5, 6, 3 })]
+        [TestCase(new int[] { 1, 2, 3 }, 0, new int[] { 4, 5, 6 }, new int[] { 4, 5, 6, 1, 2, 3 })]
+        [TestCase(new int[] { 1, 2, 3 }, 1, new int[] { 4, 5, 6 }, new int[] { 1, 4, 5, 6, 2, 3 })]
+        [TestCase(new int[] { }, 0, new int[] { 4, 5, 6 }, new int[] { 4, 5, 6 })]
+        //[TestCase(new int[] { 1, 2, 3 }, 0, new int[] { }, new int[] { 1, 2, 3 })]
+        //[TestCase(new int[] { 1, 2, 3 }, 2, new int[] { }, new int[] { 1, 2, 3 })]
+        [TestCase(new int[] { }, 0, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
+        public void AddByIndex_WhenListAndIndexPassed_ThenAddListByIndex(int[] actualArray, int index, int[] arrayForList, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList list = new ArrayList(arrayForList);
+            ArrayList expectedArrayList = new ArrayList(expectedArray);
+
+            actual.AddListByIndex(list, index);
+
+            Assert.AreEqual(expectedArrayList, actual);
+        }
+
+        [TestCase(new int[] { 1 }, new int[] { 4, 5, 6 }, new int[] { 1, 4, 5, 6 })]
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 4, 5, 6 }, new int[] { 1, 2, 3, 4, 5, 6 })]
+        [TestCase(new int[] { }, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { }, new int[] { 1, 2, 3 })]
+        public void AddLast_WhenListPassed_ThenAddListInLast(int[] actualArray, int[] arrayForList, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList list = new ArrayList(arrayForList);
+            ArrayList expectedArrayList = new ArrayList(expectedArray);
+
+            actual.AddListFromLast(list);
+
+            Assert.AreEqual(expectedArrayList, actual);
+        }
+
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 4, 5, 6 }, new int[] { 4, 5, 6, 1, 2, 3 })]
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { }, new int[] { 1, 2, 3 })]
+        [TestCase(new int[] { }, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
+        public void AddFirst_WhenListPassed_ThenAddListInFirst(int[] actualArray, int[] arrayForList, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList list = new ArrayList(arrayForList);
+            ArrayList expectedArrayList = new ArrayList(expectedArray);
+
+            actual.AddListFromStart(list);
+
+            Assert.AreEqual(expectedArrayList, actual);
+        }
     }
 }

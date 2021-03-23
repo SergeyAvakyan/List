@@ -4,7 +4,7 @@ using System.Text;
 
 namespace List
 {
-    class LinkedList
+    public class LinkedList
     {
         public int Length { get; private set; }
         public int this[int index]
@@ -80,6 +80,15 @@ namespace List
             _tail = _tail.Next;
         }
 
+        public void AddValueToStart(int value)
+        {
+            Length++;
+
+            Node first = new Node(value);
+
+            first.Next = _root;
+            _root = first;
+        }
         public void RemoveFirst()
         {
             _root = _root.Next;

@@ -308,19 +308,59 @@ namespace List
                 indexOfElements = GetFirstIndexByValue(value);
             }
         }
-        public void AddListToTheEnd()
+        public void AddListFromLast(ArrayList list)
         {
-
+            if (list != null && list.Length != 0)
+            {
+                int lastIndex = Length;
+                AddListByIndex(list, lastIndex);
+            }
         }
-        public void AddListToTheBeginning()
+        public void AddListFromStart(ArrayList list)
         {
-
+            if (list != null && list.Length != 0)
+            {
+                int firstIndex = 0;
+                AddListByIndex(list, firstIndex);
+            }
         }
-        public void AddListByIndex()
+        public void AddListByIndex(ArrayList list, int index)
         {
+            if (list != null && list.Length != 0)
+            {
+                if (index >= 0 && index <= Length)
+                {
+                    Length += list.Length;
+                        Resize();
+                    int tempLength = list.Length;
+                    for (int i = Length - 1; i >= index; i--)
+                    {
+                        if (i + tempLength < _array.Length)
+                        {
+                            _array[i + tempLength] = _array[i];
+                        }
+                    }
 
+                    int count = 0;
+                    for (int i = index; i < Length; i++)
+                    {
+                        if (count < list.Length)
+                        {
+                            _array[i] = list[count++];
+                        }
+                    }
+                }
+
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+            else
+            {
+                throw new ArgumentException("List no contains elements");
+            }
         }
-
         private void Resize()
         {
             if (Length >= _array.Length)
@@ -328,7 +368,7 @@ namespace List
                 int newLenght = (int)(Length * 1.33 + 1);
                 int[] tmpArray = new int[newLenght];
 
-                for (int i = 0; i < Length; i++)
+                for (int i = 0; i < _array.Length; i++)
                 {
                     tmpArray[i] = _array[i];
                 }
