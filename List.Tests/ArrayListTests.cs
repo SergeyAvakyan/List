@@ -84,12 +84,12 @@ namespace List.Tests
         [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3 })]
         [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2 })]
 
-        public void Remove_NElementsFromLast_WhenNElementsPassed_ShouldRemoveNElements(int Nvalue, int[] actualArray, int[] expectedArray)
+        public void Remove_NElementsFromLast_WhenNElementsPassed_ShouldRemoveNElements(int nvalue, int[] actualArray, int[] expectedArray)
         {
            ArrayList actual = new ArrayList(actualArray);
            ArrayList expected = new ArrayList(expectedArray);
 
-            actual.RemoveNElementsFromLast(Nvalue);
+            actual.RemoveNElementsFromLast(nvalue);
 
 
             Assert.AreEqual(expected, actual);
@@ -100,12 +100,12 @@ namespace List.Tests
         [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 3, 4, 5 })]
         [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 4, 5 })]
 
-        public void RemoveNElementsFromStart_WhenNElementsPassed_ShouldRemoveNElements(int Nvalue, int[] actualArray, int[] expectedArray)
+        public void RemoveNElementsFromStart_WhenNElementsPassed_ShouldRemoveNElements(int nvalue, int[] actualArray, int[] expectedArray)
         {
            ArrayList actual = new ArrayList(actualArray);
            ArrayList expected = new ArrayList(expectedArray);
 
-            actual.RemoveNElementsFromStart(Nvalue);
+            actual.RemoveNElementsFromStart(nvalue);
 
 
             Assert.AreEqual(expected, actual);
@@ -115,12 +115,12 @@ namespace List.Tests
         [TestCase(1, 1, new int[] { 1, 2, 3 }, new int[] { 1, 3 })]
         [TestCase(2, 2, new int[] { 1, 2, 3, 4 }, new int[] { 1, 2 })]
 
-        public void RemoveNElementsByIndex_WhenIndexAndNElementsPassed_ShouldRemoveByIndexNElements(int Nvalue, int index, int[] actualArray, int[] expectedArray)
+        public void RemoveNElementsByIndex_WhenIndexAndNElementsPassed_ShouldRemoveByIndexNElements(int nvalue, int index, int[] actualArray, int[] expectedArray)
         {
            ArrayList actual = new ArrayList(actualArray);
            ArrayList expected = new ArrayList(expectedArray);
 
-            actual.RemoveNElementsByIndex(Nvalue, index);
+            actual.RemoveNElementsByIndex(nvalue, index);
 
             Assert.AreEqual(expected, actual);
         }

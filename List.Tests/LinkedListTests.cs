@@ -29,7 +29,7 @@ namespace List.Tests
             LinkedList actual = new LinkedList(actualArray);
             LinkedList expected = new LinkedList(expectedArray);
 
-            actual.AddValueToStrart(value);
+            actual.AddValueToStart(value);
 
             Assert.AreEqual(expected, actual);
         }
@@ -48,7 +48,8 @@ namespace List.Tests
         }
 
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2 })]
-        [TestCase(new int[] { }, new int[] { })]
+        [TestCase(new int[] { 3, 2, 1 }, new int[] { 3, 2 })]
+        [TestCase(new int[] { 1, 2, 3, 4 }, new int[] { 1, 2, 3 })]
         public void RemoveOneElementFromLast_WhenMethodCalledPassed_ShouldRemoveLast(int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = new LinkedList(actualArray);
@@ -60,7 +61,8 @@ namespace List.Tests
         }
 
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 2, 3 })]
-        [TestCase(new int[] { }, new int[] { })]
+        [TestCase(new int[] { 3, 2, 1 }, new int[] { 2, 1 })]
+        [TestCase(new int[] { 1, 2, 3, 4 }, new int[] { 2, 3, 4 })]
         public void RemoveOneElementFromStart_WhenMethodCalledPassed_ShouldRemoveFirstElem(int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = new LinkedList(actualArray);
@@ -88,43 +90,40 @@ namespace List.Tests
         [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3 })]
         [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2 })]
 
-        public void Remove_NElementsFromLast_WhenNElementsPassed_ShouldRemoveNElements(int Nvalue, int[] actualArray, int[] expectedArray)
+        public void Remove_NElementsFromLast_WhenNElementsPassed_ShouldRemoveNElements(int nvalue, int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = new LinkedList(actualArray);
             LinkedList expected = new LinkedList(expectedArray);
 
-            actual.RemoveNElementsFromLast(Nvalue);
+            actual.RemovNElementsFromLast(nvalue);
 
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(0, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 2, 3, 4, 5 })]
         [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 3, 4, 5 })]
         [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 4, 5 })]
 
-        public void RemoveNElementsFromStart_WhenNElementsPassed_ShouldRemoveNElements(int Nvalue, int[] actualArray, int[] expectedArray)
+        public void RemoveNElementsFromStart_WhenNElementsPassed_ShouldRemoveNElements(int nvalue, int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = new LinkedList(actualArray);
             LinkedList expected = new LinkedList(expectedArray);
 
-            actual.RemoveNElementsFromStart(Nvalue);
+            actual.RemoveNElementsFromStart(nvalue);
 
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(0, 0, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
         [TestCase(1, 1, new int[] { 1, 2, 3 }, new int[] { 1, 3 })]
-        [TestCase(2, 2, new int[] { 1, 2, 3, 4 }, new int[] { 1, 2 })]
-
-        public void RemoveNElementsByIndex_WhenIndexAndNElementsPassed_ShouldRemoveByIndexNElements(int Nvalue, int index, int[] actualArray, int[] expectedArray)
+        [TestCase(2, 2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 5 })]
+        public void RemoveNElementsByIndex_WhenIndexAndNElementsPassed_ShouldRemoveByIndexNElements( int nvalue,int index, int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = new LinkedList(actualArray);
             LinkedList expected = new LinkedList(expectedArray);
 
-            actual.RemoveNElementsByIndex(Nvalue, index);
+            actual.RemoveNElementsByIndex(nvalue,index);
 
             Assert.AreEqual(expected, actual);
         }
@@ -142,18 +141,32 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 8, 7, 6, 5, 4, 3, 2, 1 })]
-        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7 }, new int[] { 7, 6, 5, 4, 3, 2, 1 })]
-        [TestCase(new int[] { }, new int[] { })]
-        public void GetReverse_WhenMethodCalledPassed_ShouldReversList(int[] actualArray, int[] expectedArray)
+        [TestCase(2, 2, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 1, 2, 2, 4, 5, 6, 7, 8 })]
+        [TestCase(10, 0, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 10, 2, 3, 4, 5, 6, 7, 8 })]
+        [TestCase(1, 7, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 1 })]
+
+        public void GetChangeByIndex_WhenValue_ReturnIndex(int value, int index, int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = new LinkedList(actualArray);
             LinkedList expected = new LinkedList(expectedArray);
 
-            actual.GetReverse();
+            actual.GetChangeByIndex(index, value);
 
             Assert.AreEqual(expected, actual);
         }
+
+        //[TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 8, 7, 6, 5, 4, 3, 2, 1 })]
+        //[TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7 }, new int[] { 7, 6, 5, 4, 3, 2, 1 })]
+        //[TestCase(new int[] { }, new int[] { })]
+        //public void GetReverse_WhenMethodCalledPassed_ShouldReversList(int[] actualArray, int[] expectedArray)
+        //{
+        //    LinkedList actual = new LinkedList(actualArray);
+        //    LinkedList expected = new LinkedList(expectedArray);
+
+        //    actual.GetReverse();
+
+        //    Assert.AreEqual(expected, actual);
+        //}
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 4)]
         [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 7)]
@@ -195,57 +208,57 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(new int[] { }, new int[] { })]
-        [TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { -1, 1, 1, 3, 4, 6, 8, 12 })]
-        public void GetSortAscending_WhenMethodCalledPassed_ShouldSortbyAscending(int[] actualArray, int[] expectedArray)
-        {
-            LinkedList actual = new LinkedList(actualArray);
-            LinkedList expected = new LinkedList(expectedArray);
+        //[TestCase(new int[] { }, new int[] { })]
+        //[TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { -1, 1, 1, 3, 4, 6, 8, 12 })]
+        //public void GetSortAscending_WhenMethodCalledPassed_ShouldSortbyAscending(int[] actualArray, int[] expectedArray)
+        //{
+        //    LinkedList actual = new LinkedList(actualArray);
+        //    LinkedList expected = new LinkedList(expectedArray);
 
-            actual.GetSortAscending();
+        //    actual.GetSortAscending();
 
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
 
-        [TestCase(new int[] { }, new int[] { })]
-        [TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { 12, 8, 6, 4, 3, 1, 1, -1 })]
-        public void GetDescendingSort_WhenMethodCalledPassed_ShouldSortbyAscending(int[] actualArray, int[] expectedArray)
-        {
-            LinkedList actual = new LinkedList(actualArray);
-            LinkedList expected = new LinkedList(expectedArray);
+        //[TestCase(new int[] { }, new int[] { })]
+        //[TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { 12, 8, 6, 4, 3, 1, 1, -1 })]
+        //public void GetDescendingSort_WhenMethodCalledPassed_ShouldSortbyAscending(int[] actualArray, int[] expectedArray)
+        //{
+        //    LinkedList actual = new LinkedList(actualArray);
+        //    LinkedList expected = new LinkedList(expectedArray);
 
-            actual.GetDescendingSort();
+        //    actual.GetDescendingSort();
 
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
 
-        [TestCase(7, new int[] { 7, 1, 2, 3 }, new int[] { 1, 2, 3 })]
-        [TestCase(2, new int[] { 1, 5, 2, 3 }, new int[] { 1, 5, 3 })]
-        [TestCase(7, new int[] { 1, 2, 3, 7 }, new int[] { 1, 2, 3 })]
+        //[TestCase(7, new int[] { 7, 1, 2, 3 }, new int[] { 1, 2, 3 })]
+        //[TestCase(2, new int[] { 1, 5, 2, 3 }, new int[] { 1, 5, 3 })]
+        //[TestCase(7, new int[] { 1, 2, 3, 7 }, new int[] { 1, 2, 3 })]
 
-        public void RemoveByValueOfTheFirst_WhenElementByValuePassed_ShouldRemoveValue(int value, int[] actualArray, int[] expectedArray)
-        {
-            LinkedList actual = new LinkedList(actualArray);
-            LinkedList expected = new LinkedList(expectedArray);
+        //public void RemoveByValueOfTheFirst_WhenElementByValuePassed_ShouldRemoveValue(int value, int[] actualArray, int[] expectedArray)
+        //{
+        //    LinkedList actual = new LinkedList(actualArray);
+        //    LinkedList expected = new LinkedList(expectedArray);
 
-            actual.RemoveByValueOfTheFirst(value);
+        //    actual.RemoveByValueOfTheFirst(value);
 
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
 
-        [TestCase(new int[] { 2, 1, 2, 4, 2, 6, 7, 8 }, 2, new int[] { 1, 4, 6, 7, 8 })]
-        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 8, new int[] { 1, 2, 3, 4, 5, 6, 7 })]
-        [TestCase(new int[] { 1, 1, 3, 4, 5, 6, 8, 8 }, 10, new int[] { 1, 1, 3, 4, 5, 6, 8, 8 })]
-        [TestCase(new int[] { 3, 3, 3 }, 3, new int[] { })]
-        public void RemoveAllByValue_WhenValue_ShouldRemoveAllValue(int[] actualArray, int value, int[] expectedArray)
-        {
-            LinkedList actual = new LinkedList(actualArray);
-            LinkedList expected = new LinkedList(expectedArray);
+        //[TestCase(new int[] { 2, 1, 2, 4, 2, 6, 7, 8 }, 2, new int[] { 1, 4, 6, 7, 8 })]
+        //[TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 8, new int[] { 1, 2, 3, 4, 5, 6, 7 })]
+        //[TestCase(new int[] { 1, 1, 3, 4, 5, 6, 8, 8 }, 10, new int[] { 1, 1, 3, 4, 5, 6, 8, 8 })]
+        //[TestCase(new int[] { 3, 3, 3 }, 3, new int[] { })]
+        //public void RemoveAllByValue_WhenValue_ShouldRemoveAllValue(int[] actualArray, int value, int[] expectedArray)
+        //{
+        //    LinkedList actual = new LinkedList(actualArray);
+        //    LinkedList expected = new LinkedList(expectedArray);
 
-            actual.RemoveByValueAll(value);
+        //    actual.RemoveByValueAll(value);
 
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
 
 
 

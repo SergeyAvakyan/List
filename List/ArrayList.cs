@@ -135,39 +135,39 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
-        public void RemoveNElementsFromLast(int Nvalue)
+        public void RemoveNElementsFromLast(int nvalue)
         {
-            if (Nvalue < Length && Nvalue >= 0)
+            if (nvalue < Length && nvalue >= 0)
             {
-                Length -= Nvalue;
+                Length -= nvalue;
 
                 Resize();
             }
         }
-        public void RemoveNElementsFromStart(int Nvalue)
+        public void RemoveNElementsFromStart(int nvalue)
         {
-            if (Nvalue < Length && Nvalue >= 0)
+            if (nvalue < Length && nvalue >= 0)
             {
-                for (int i = Nvalue; i <= Length; i++)
+                for (int i = nvalue; i <= Length; i++)
                 {
-                    _array[i - Nvalue] = _array[i];
+                    _array[i - nvalue] = _array[i];
                 }
 
-                Length -= Nvalue;
+                Length -= nvalue;
                 Resize();
             }
         }
-        public void RemoveNElementsByIndex(int Nvalue, int Index)
+        public void RemoveNElementsByIndex(int nvalue, int Index)
         {
-            if (Index < Length && Index >= 0 && Length - Nvalue > 0)
+            if (Index < Length && Index >= 0 && Length - nvalue > 0)
             {
 
-                for (int i = Index + Nvalue; i <= Length; i++)
+                for (int i = Index + nvalue; i <= Length; i++)
                 {
-                    _array[i - Nvalue] = _array[i];
+                    _array[i - nvalue] = _array[i];
                 }
 
-                Length -= Nvalue;
+                Length -= nvalue;
                 Resize();
             }
             else
