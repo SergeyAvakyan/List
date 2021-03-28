@@ -276,8 +276,19 @@ namespace List
         }
         public void Revers()
         {
-
+            Node prev = null;
+            Node next = null;
+            Node current = _root;
+            while (current != null)
+            {
+                next = current.Next;
+                current.Next = prev;
+                prev = current;
+                current = next;
+            }
+            _root = prev;
         }
+        
         public int GetIndexMaxElement()
         {
             Node current = _root;

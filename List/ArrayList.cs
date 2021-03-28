@@ -101,7 +101,12 @@ namespace List
             {
                 Length--;
             }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
             Resize();
+            
         }
         public void RemoveOneElementFromStart()
         {
@@ -113,6 +118,10 @@ namespace List
             if (!(Length == 0))
             {
                 Length--;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
             }
 
             Resize();
@@ -137,44 +146,85 @@ namespace List
         }
         public void RemoveNElementsFromLast(int nvalue)
         {
-            if (nvalue < Length && nvalue >= 0)
+            if (nvalue < Length)
             {
-                Length -= nvalue;
-
-                Resize();
+                if (!(nvalue < 0))
+                {
+                    Length -= nvalue;
+                    Resize();
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid value!");
+                }
+            }
+            else if (nvalue == Length)
+            {
+                Length = 0;
+                _array = new int[10];
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Index out of range!");
             }
         }
         public void RemoveNElementsFromStart(int nvalue)
         {
-            if (nvalue < Length && nvalue >= 0)
+            if (nvalue < Length)
             {
-                for (int i = nvalue; i <= Length; i++)
+                if (!(nvalue < 0))
                 {
-                    _array[i - nvalue] = _array[i];
+                    for (int i = nvalue; i <= Length; i++)
+                    {
+                        _array[i - nvalue] = _array[i];
+                    }
+                    Length -= nvalue;
+                    Resize();
                 }
-
-                Length -= nvalue;
-                Resize();
+                else
+                {
+                    throw new ArgumentException("Invalid value");
+                }
             }
-        }
-        public void RemoveNElementsByIndex(int nvalue, int Index)
-        {
-            if (Index < Length && Index >= 0 && Length - nvalue > 0)
+            else if (nvalue == Length)
             {
-
-                for (int i = Index + nvalue; i <= Length; i++)
-                {
-                    _array[i - nvalue] = _array[i];
-                }
-
-                Length -= nvalue;
-                Resize();
+                Length = 0;
+                _array = new int[10];
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new IndexOutOfRangeException("Index out of range!");
             }
-        }
+        } 
+        public void RemoveNElementsByIndex(int nvalue, int Index)
+        {
+            if (nvalue < Length)
+            {
+                if (!(nvalue < 0))
+                {
+                    for (int i = Index + nvalue; i <= Length; i++)
+                    {
+                        _array[i - nvalue] = _array[i];
+                    }
+
+                    Length -= nvalue;
+                    Resize();
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid value");
+                }
+            }
+            else if (nvalue == Length)
+            {
+                Length = 0;
+                _array = new int[10];
+            }
+            else
+                {
+                    throw new IndexOutOfRangeException("Index out of range!");
+                }
+            }
         public int GetFirstIndexByValue(int value)
         {
             for (int i = 0; i < Length; i++)
@@ -200,7 +250,7 @@ namespace List
                 _array[swapIndex] = temp;
             }
         }
-        public int GetIndexMaxElement()
+        public int GetIndexOfMaxElement()
         {
             if (!(Length == 0))
             {
@@ -241,12 +291,12 @@ namespace List
             }
             else
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Empty list");
             }
         }
         public int GetValueMaxElement()
         {
-            return GetIndexMaxElement();
+            return GetIndexOfMaxElement();
         }
         public int GetValueMinElement()
         {
@@ -315,6 +365,10 @@ namespace List
                 int lastIndex = Length;
                 AddListByIndex(list, lastIndex);
             }
+            else
+            {
+                throw new ArgumentException("Empty list");
+            }
         }
         public void AddListFromStart(ArrayList list)
         {
@@ -322,6 +376,10 @@ namespace List
             {
                 int firstIndex = 0;
                 AddListByIndex(list, firstIndex);
+            }
+            else
+            {
+                throw new ArgumentException("Empty list");
             }
         }
         public void AddListByIndex(ArrayList list, int index)
@@ -358,7 +416,7 @@ namespace List
             }
             else
             {
-                throw new ArgumentException("List no contains elements");
+                throw new ArgumentException("Empty list");
             }
         }
         private void Resize()

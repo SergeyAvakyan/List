@@ -155,18 +155,19 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 8, 7, 6, 5, 4, 3, 2, 1 })]
-        //[TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7 }, new int[] { 7, 6, 5, 4, 3, 2, 1 })]
-        //[TestCase(new int[] { }, new int[] { })]
-        //public void GetReverse_WhenMethodCalledPassed_ShouldReversList(int[] actualArray, int[] expectedArray)
-        //{
-        //    LinkedList actual = new LinkedList(actualArray);
-        //    LinkedList expected = new LinkedList(expectedArray);
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 5, 4, 3, 2, 1 })]
+        //[TestCase( new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 10, 2, 3, 4, 5, 6, 7, 8 })]
+        //[TestCase( new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 1 })]
 
-        //    actual.GetReverse();
+        public void Revers(int[] actualArray, int[] expectedArray)
+        {
+            LinkedList actual = new LinkedList(actualArray);
+            LinkedList expected = new LinkedList(expectedArray);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            actual.Revers();
+
+            Assert.AreEqual(expected, actual);
+        }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 4)]
         [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 7)]
