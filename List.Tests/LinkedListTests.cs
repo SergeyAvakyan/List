@@ -209,17 +209,18 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestCase(new int[] { }, new int[] { })]
-        //[TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { -1, 1, 1, 3, 4, 6, 8, 12 })]
-        //public void GetSortAscending_WhenMethodCalledPassed_ShouldSortbyAscending(int[] actualArray, int[] expectedArray)
-        //{
-        //    LinkedList actual = new LinkedList(actualArray);
-        //    LinkedList expected = new LinkedList(expectedArray);
+        [TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { -1, 1, 1, 3, 4, 6, 8, 12 })]
+        [TestCase(new int[] { 2, 1, 8, 16, 11 }, new int[] { 1, 2, 8, 11, 16 })]
+        [TestCase(new int[] { 8, 1, 18, 16, 11 }, new int[] { 1, 8, 11, 16, 18 })]
+        public void GetSortAscending_WhenMethodCalledPassed_ShouldSortbyAscending(int[] actualArray, int[] expectedArray)
+        {
+            LinkedList actual = new LinkedList(actualArray);
+            LinkedList expected = new LinkedList(expectedArray);
 
-        //    actual.GetSortAscending();
+            actual.GetSortAscending();
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            Assert.AreEqual(expected, actual);
+        }
 
         //[TestCase(new int[] { }, new int[] { })]
         //[TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { 12, 8, 6, 4, 3, 1, 1, -1 })]

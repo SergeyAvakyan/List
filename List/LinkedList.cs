@@ -288,7 +288,6 @@ namespace List
             }
             _root = prev;
         }
-        
         public int GetIndexMaxElement()
         {
             Node current = _root;
@@ -338,6 +337,25 @@ namespace List
         {
             return GetIndexOfMinElement();
         }
+        public void GetSortAscending()
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                int min = i;
+
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if (GetNodeByIndex(min).Value > GetNodeByIndex(j).Value)
+                    {
+                        min = j;
+                    }
+                }
+                int temp = GetNodeByIndex(i).Value;
+                GetNodeByIndex(i).Value = GetNodeByIndex(min).Value;
+                GetNodeByIndex(min).Value = temp;
+            }
+        }
+      
         public override string ToString()
         {
             if (Length != 0)

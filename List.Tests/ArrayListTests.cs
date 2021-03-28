@@ -139,8 +139,8 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(-3, new int[] { 1, 3, 5, 7 }, new int[] { 1, 3, 5 })]
-        public void Remove_NElementsFromLast_WhenNElementsPassed_ShouldRemoveArgumentException(int nvalue, int[] actualArray, int[] expectedArray)
+        [TestCase(-3, new int[] { 1, 3, 5, 7 })]
+        public void Remove_NElementsFromLast_WhenNElementsPassed_ShouldRemoveArgumentException(int nvalue, int[] actualArray)
         {
             Assert.Throws<ArgumentException>(() =>
             {
@@ -174,8 +174,8 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(-3, new int[] { 1, 3, 5, 7 }, new int[] { 1, 3, 5 })]
-        public void Remove_NElementsFromStart_WhenNElementsPassed_ShouldRemoveArgumentException(int nvalue, int[] actualArray, int[] expectedArray)
+        [TestCase(-3, new int[] { 1, 3, 5, 7 })]
+        public void Remove_NElementsFromStart_WhenNElementsPassed_ShouldRemoveArgumentException(int nvalue, int[] actualArray)
         {
             Assert.Throws<ArgumentException>(() =>
             {
@@ -184,8 +184,8 @@ namespace List.Tests
             });
         }
 
-        [TestCase(6, new int[] { 1, 3, 5, 7 }, new int[] { 1, 3, 5 })]
-        public void Remove_NElementsFromStart_WhenNElementsPassed_ShouldRemoveIndexOutOfRangeException(int nvalue, int[] actualArray, int[] expectedArray)
+        [TestCase(6, new int[] { 1, 3, 5, 7 })]
+        public void Remove_NElementsFromStart_WhenNElementsPassed_ShouldRemoveIndexOutOfRangeException(int nvalue, int[] actualArray)
         {
             Assert.Throws<IndexOutOfRangeException>(() =>
             {
@@ -207,8 +207,8 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(-5, 2, new int[] { 1, 3, 5, 7 }, new int[] { 1, 3, 5 })]
-        public void Remove_NElementsByIndex_WhenNElementsPassed_ShouldRemoveArgumentException(int nvalue, int index, int[] actualArray, int[] expectedArray)
+        [TestCase(-5, 2, new int[] { 1, 3, 5, 7 })]
+        public void Remove_NElementsByIndex_WhenNElementsPassed_ShouldRemoveArgumentException(int nvalue, int index, int[] actualArray)
         {
             Assert.Throws<ArgumentException>(() =>
             {
@@ -217,8 +217,8 @@ namespace List.Tests
             });
         }
 
-        [TestCase(10, 0, new int[] { 2, 3, 5, 7 }, new int[] { 1, 3, 5 })]
-        public void Remove_NElementsByIndex_WhenNElementsPassed_ShouldRemoveIndexOutOfRangeException(int nvalue, int index, int[] actualArray, int[] expectedArray)
+        [TestCase(10, 0, new int[] { 2, 3, 5, 7 })]
+        public void Remove_NElementsByIndex_WhenNElementsPassed_ShouldRemoveIndexOutOfRangeException(int nvalue, int index, int[] actualArray)
         {
             Assert.Throws<IndexOutOfRangeException>(() =>
             {
@@ -385,13 +385,14 @@ namespace List.Tests
             Assert.AreEqual(expectedArrayList, actual);
         }
 
-        [TestCase(new int[] { 5, 10, 15, 30 }, new int[] { }, new int[] { 5, 10, 15, 30 })]
-        public void AddListFromLast_WhenListPassed_ShouldArgumentException(int[] actualArray, int[] arrayForList, int[] expectedArray)
+        [TestCase(new int[] { 5, 10, 15, 30 }, new int[] { })]
+        public void AddListFromLast_WhenListPassed_ShouldArgumentException(int[] actualArray, int[] arrayForList)
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                ArrayList actual = new ArrayList(arrayForList);
-                actual.AddListFromLast(actual);
+                ArrayList actual = new ArrayList(actualArray);
+                ArrayList list = new ArrayList(arrayForList);
+                actual.AddListFromLast(list);
             });
         }
 
@@ -409,13 +410,14 @@ namespace List.Tests
             Assert.AreEqual(expectedArrayList, actual);
         }
 
-        [TestCase(new int[] { 5, 10, 15, 30 }, new int[] { }, new int[] { 5, 10, 15, 30 })]
-        public void AddListFromStart_WhenListPassed_ShouldArgumentException(int[] actualArray, int[] arrayForList, int[] expectedArray)
+        [TestCase(new int[] { 5, 10, 15, 30 }, new int[] { })]
+        public void AddListFromStart_WhenListPassed_ShouldArgumentException(int[] actualArray, int[] arrayForList)
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                ArrayList actual = new ArrayList(arrayForList);
-                actual.AddListFromStart(actual);
+                ArrayList actual = new ArrayList(actualArray);
+                ArrayList list = new ArrayList(arrayForList);
+                actual.AddListFromStart(list);
             });
         }
 
@@ -435,13 +437,14 @@ namespace List.Tests
             Assert.AreEqual(expectedArrayList, actual);
         }
 
-        [TestCase(new int[] { 5, 10, 15, 30 }, -1, new int[] { 10, 25, 32 }, new int[] { 5, 10, 15, 30 })]
-        public void AddListByIndex_WhenListPassed_ShouldIndexOutOfRangeException(int[] actualArray, int index, int[] arrayForList, int[] expectedArray)
+        [TestCase(new int[] { 5, 10, 15, 30 }, -1, new int[] { 10, 25, 32 })]
+        public void AddListByIndex_WhenListPassed_ShouldIndexOutOfRangeException(int[] actualArray, int index, int[] arrayForList)
         {
             Assert.Throws<IndexOutOfRangeException>(() =>
             {
-                ArrayList actual = new ArrayList(arrayForList);
-                actual.AddListByIndex(actual, index);
+                ArrayList actual = new ArrayList(actualArray);
+                ArrayList list = new ArrayList(arrayForList);
+                actual.AddListByIndex(list, index);
             });
         }
     }
