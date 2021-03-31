@@ -354,10 +354,10 @@ namespace List.Tests
         [TestCase(new int[] { }, new int[] { })]
         [TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { 12, 8, 6, 4, 3, 1, 1, -1 })]
         [TestCase(new int[] { 5, 8, 13, 1, 6, 9, 82, 65, 14 }, new int[] { 82, 65, 14, 13, 9, 8, 6, 5, 1 })]
-        public void GetDescendingSort_WhenMethodCalled_SortbyAscending(int[] actualArray, int[] expectedArray)
+        public void GetDescendingSort_WhenMethodCalledPassed_ShouldSortbyAscending(int[] actualArray, int[] expectedArray)
         {
-            ArrayList actual = new ArrayList(actualArray);
-            ArrayList expected = new ArrayList(expectedArray);
+            LinkedList actual = new LinkedList(actualArray);
+            LinkedList expected = new LinkedList(expectedArray);
 
             actual.GetDescendingSort();
 

@@ -85,14 +85,23 @@ namespace List
         }
         public void AddValueToStart(int value)
         {
-            Length++;
+            if (Length != 0)
+            {
+                Length++;
 
-            Node first = new Node(value);
+                Node first = new Node(value);
 
-            first.Next = _root;
-            _root = first;
+                first.Next = _root;
+                _root = first;
+            }
+            else
+            {
+                _root = new Node(value);
+                _tail = _root;
+                Length++;
+            }
         }
-        public void AddValueByIndex(int value, int index)
+            public void AddValueByIndex(int value, int index)
         {
             if (index >= 0 && index <= Length)
             {
