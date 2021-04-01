@@ -13,19 +13,28 @@ namespace List
         }
         public ArrayList(int value)
         {
-            Length = 0;
+            Length = 1;
             _array = new int[10];
             _array[0] = value;
         }
-        public ArrayList(int[] array)
+        private ArrayList(int[] array)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException();
-            }
             Length = array.Length;
-            _array = array;
-            Resize();
+
+            _array = new int[Length];
+            for (int i = 0; i < Length; i++)
+            {
+                _array[i] = array[i];
+            } 
+        }
+        public static ArrayList Create(int[] array)
+        {
+            if (!(array is null))
+            {
+                return new ArrayList(array);
+            }
+
+            throw new NullReferenceException("Values is null");
         }
         public int this[int index]
         {
@@ -110,10 +119,12 @@ namespace List
         }
         public void RemoveOneElementFromStart()
         {
-            for (int i = 1; i <= Length; i++)
+            
+            for (int i = 1; i < Length; i++)
             {
                 _array[i - 1] = _array[i];
             }
+            Resize();
 
             if (!(Length == 0))
             {
@@ -124,20 +135,29 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
 
-            Resize();
         }
         public void RemoveOneElementByIndex(int index)
         {
             if (index < Length && index >= 0)
             {
-
-                for (int i = index; i < Length; i++)
+                if (index == 0)
                 {
-                    _array[i] = _array[i + 1];
+                    RemoveOneElementFromStart();
                 }
+                else if (index == Length - 1)
+                {
+                    RemoveOneElementFromLast();
+                }
+                else
+                {
+                    Length--;
+                    for (int i = index; i < Length; i++)
+                    {
+                        _array[i] = _array[i + 1];
+                    }
 
-                Length--;
-                Resize();
+                    Resize();
+                }
             }
             else
             {
@@ -174,7 +194,7 @@ namespace List
             {
                 if (!(nvalue < 0))
                 {
-                    for (int i = nvalue; i <= Length; i++)
+                    for (int i = nvalue; i < Length; i++)
                     {
                         _array[i - nvalue] = _array[i];
                     }
@@ -202,7 +222,7 @@ namespace List
             {
                 if (!(nvalue < 0))
                 {
-                    for (int i = Index + nvalue; i <= Length; i++)
+                    for (int i = Index + nvalue; i < Length; i++)
                     {
                         _array[i - nvalue] = _array[i];
                     }

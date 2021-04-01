@@ -343,33 +343,7 @@ namespace List
         }
         public void Revers()
         {
-            if (!(this is null))
-            {
-                if (Length > 1)
-                {
-                    DoubleNode prev = null;
-                    DoubleNode current = _root;
-                    while (current != null)
-                    {
-                        DoubleNode next = current.Next;
-                        current.Next = prev;
-                        prev = current;
-                        current = next;
-                    }
-                    _tail = _root;
-                    _root = prev;
-                }
-                else
-                {
-                    Length = 0;
-                    _root = null;
-                    _tail = null;
-                }
-            }
-            else
-            {
-                throw new NullReferenceException();
-            }
+            
         }
         public int GetIndexMaxElement()
         {

@@ -45,10 +45,8 @@ namespace List
             _root = new Node(value);
             _tail = _root;
         }
-        public LinkedList(int[] values)
+        private LinkedList(int[] values)
         {
-            if (!(values is null))
-            {
                 Length = values.Length;
 
                 if (values.Length != 0)
@@ -68,7 +66,16 @@ namespace List
                     _tail = null;
                 }
             }
+        public static LinkedList Create(int[] values)
+        {
+            if (!(values is null))
+            {
+                return new LinkedList(values);
+            }
+
+            throw new NullReferenceException("Values is null");
         }
+
         public void Add(int value)
         {
             if (Length != 0)
