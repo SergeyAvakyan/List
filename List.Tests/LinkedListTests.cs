@@ -6,8 +6,19 @@ using NUnit.Framework;
 
 namespace List.Tests
 {
-    class LinkedListTests
+    public class LinkedListTests
     {
+        [TestCase(1, new int[] { 5, 10, 15 }, 10)]
+        public void GetIndex_WhenIndex_ShouldValueByIndex(int index, int[] actualArray, int expected)
+        {
+            LinkedList expectedArray = LinkedList.Create(actualArray);
+
+             
+            int actual = expectedArray[index];
+
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase(0)]
         public void LinkedListEmptyConstructor_WhenObjectOfAClassIsCreated_LengthEqualsZero(int expected)
         {
@@ -17,9 +28,27 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(2, 1)]
+        public void LinkedListConstructor_WhenObjectOfAClassIsCreated_Length1(int value, int expected)
+        {
+            LinkedList actualList = new LinkedList(value);
+            int actual = actualList.Length;
+
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(null)]
+        public void LinkedList_WhenListPassed_ShouldArgumentNullException(int[] actualArray)
+        {
+            Assert.Throws<NullReferenceException>(() =>
+            {
+                LinkedList.Create(null);
+            });
+        }
+
         [TestCase(3, new int[] { 1, 2 }, new int[] { 1, 2, 3 })]
         [TestCase(5, new int[] { 1, 2, 3, 4 }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(1, new int[] { }, new int[] { 1 })]
+        [TestCase(1, new int[] { 20 }, new int[] { 20, 1 })]
         public void AddValue_WhenValuePassed_ShouldAddValueToLast(int value, int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = LinkedList.Create(actualArray);
@@ -71,6 +100,7 @@ namespace List.Tests
 
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2 })]
         [TestCase(new int[] { 3, 2, 1 }, new int[] { 3, 2 })]
+        [TestCase(new int[] { 1, 20 }, new int[] { 1 })]
         [TestCase(new int[] { 1 }, new int[] { })]
         public void RemoveOneElementFromLast_WhenListPassed_ShouldRemoveLastElem(int[] actualArray, int[] expectedArray)
         {
@@ -84,6 +114,7 @@ namespace List.Tests
 
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 2, 3 })]
         [TestCase(new int[] { 3, 2, 1 }, new int[] { 2, 1 })]
+        [TestCase(new int[] {  2, 1 }, new int[] { 1 })]
         [TestCase(new int[] { 1 }, new int[] { })]
         public void RemoveOneElementFromStart_WhenListPassed_ShouldRemoveFirst(int[] actualArray, int[] expectedArray)
         {
@@ -159,10 +190,10 @@ namespace List.Tests
             });
         }
 
-        [TestCase(5, new int[] { 1, 2, 3, 4, 5 }, new int[] { })]
-        [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 2, 3, 4, 5 })]
-        [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 3, 4, 5 })]
-        [TestCase(4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 5 })]
+        [TestCase(5, new int[] { 12, 22, 13, 54, 15 }, new int[] { })]
+        [TestCase(1, new int[] { 78, 2, 3, 4, 5 }, new int[] { 2, 3, 4, 5 })]
+        [TestCase(2, new int[] { 19, 22, 3, 4, 5 }, new int[] { 3, 4, 5 })]
+        [TestCase(4, new int[] { 17, 22, 38, 41, 5 }, new int[] { 5 })]
         public void RemoveNElementsFromStart_WhenNElementsPassed_ShouldRemoveNElements(int nvalue, int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = LinkedList.Create(actualArray);
@@ -349,6 +380,7 @@ namespace List.Tests
         }
 
         [TestCase(new int[] { }, new int[] { })]
+        [TestCase(new int[] { 5, 2, 18, 23, 7, 9 }, new int[] { 2, 5, 7, 9, 18, 23 })]
         [TestCase(new int[] { 1, 3, -1, 4, 1, 6, 8, 12 }, new int[] { -1, 1, 1, 3, 4, 6, 8, 12 })]
         public void GetSortAscending_WhenMethodCalledPassed_ShouldSortbyAscending(int[] actualArray, int[] expectedArray)
         {
@@ -376,7 +408,7 @@ namespace List.Tests
         [TestCase(7, new int[] { 7, 1, 2, 3 }, new int[] { 1, 2, 3 })]
         [TestCase(2, new int[] { 1, 5, 2, 3 }, new int[] { 1, 5, 3 })]
         [TestCase(7, new int[] { 1, 2, 3, 7 }, new int[] { 1, 2, 3 })]
-
+        [TestCase(1, new int[] { 1, 2, 3, 7 }, new int[] { 2, 3, 7 })]
         public void Remove_ElementByValue_WhenValuePassed_ShouldRemoveValue(int value, int[] actualArray, int[] expectedArray)
         {
             LinkedList actual = LinkedList.Create(actualArray);
@@ -486,6 +518,18 @@ namespace List.Tests
                 LinkedList list = LinkedList.Create(arrayForList);
                 actual.AddListByIndex(list, index);
             });
+        }
+
+        [TestCase(new int[] { 2, 4, 6 }, "2 4 6 ")]
+        [TestCase(new int[] { 5 }, "5 ")]
+        [TestCase(new int[] { }, "")]
+        public void ToString_WhenArrayListPassed_ShouldString(int[] array, string expected)
+        {
+            LinkedList linkedList = LinkedList.Create(array);
+
+            string actual = linkedList.ToString();
+
+            Assert.AreEqual(expected, actual);
         }
     } 
 }

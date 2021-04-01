@@ -606,6 +606,5 @@ namespace List
             }
             return current;
         }
-
     }
 }

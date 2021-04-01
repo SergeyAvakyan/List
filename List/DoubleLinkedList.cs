@@ -45,10 +45,8 @@ namespace List
             _root = new DoubleNode(value);
             _tail = _root;
         }
-        public DoubleLinkedList(int[] values)
+        private DoubleLinkedList(int[] values)
         {
-            if (!(values is null))
-            {
                 Length = values.Length;
 
                 if (values.Length != 0)
@@ -68,7 +66,15 @@ namespace List
                     _root = null;
                     _tail = null;
                 }
+        }
+        public static DoubleLinkedList Create(int[] values)
+        {
+            if (!(values is null))
+            {
+                return new DoubleLinkedList(values);
             }
+
+            throw new NullReferenceException("Values is null");
         }
         public void Add(int value)
         {
@@ -343,7 +349,22 @@ namespace List
         }
         public void Revers()
         {
-            
+            DoubleNode current = _root;
+            DoubleNode tmp = _tail;
+            int value;
+            int count = 0;
+
+            while (count != Length / 2)
+            {
+                value = current.Value;
+                current.Value = tmp.Value;
+                tmp.Value = value;
+
+                current = current.Next;
+                tmp = tmp.Previous;
+
+                ++count;
+            }
         }
         public int GetIndexMaxElement()
         {

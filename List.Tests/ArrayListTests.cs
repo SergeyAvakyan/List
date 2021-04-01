@@ -5,6 +5,15 @@ namespace List.Tests
 {
     public class ArrayListTests
     {
+        [TestCase(1, new int[] { 5, 10, 15 }, 10)]
+        public void GetIndex_WhenIndex_ShouldValueByIndex(int index, int[] actualArray, int expected)
+        {
+           ArrayList expectedArray = ArrayList.Create(actualArray);
+
+            int actual = expectedArray[index];
+
+            Assert.AreEqual(expected, actual);
+        }
         [TestCase(0)]
         public void ArrayListEmptyConstructor_WhenObjectOfAClassIsCreated_LengthEqualsZero(int expected)
         {
@@ -35,6 +44,7 @@ namespace List.Tests
         [TestCase(1, new int[] { 1, 2, 35 }, new int[] { 1, 2, 35, 1 })]
         [TestCase(1, new int[] { 1 }, new int[] { 1, 1 })]
         [TestCase(40, new int[] { 1, 2, 35, 25, 39, 47, 85, 21, 1, 36, 25 }, new int[] { 1, 2, 35, 25, 39, 47, 85, 21, 1, 36, 25, 40 })]
+        [TestCase(3, new int[] { }, new int[] { 3 })]
         public void Add_WhenValuePassed_ShouldAddValueToLast(int value, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -62,6 +72,7 @@ namespace List.Tests
         [TestCase(3, new int[] { 1, 2 }, new int[] { 3, 1, 2 })]
         [TestCase(5, new int[] { 1, 2, 3, 4 }, new int[] { 5, 1, 2, 3, 4 })]
         [TestCase(1, new int[] { 1, 2, 35 }, new int[] { 1, 1, 2, 35 })]
+        [TestCase(3, new int[] { }, new int[] { 3 })]
         public void AddValueToStart_WhenValuePassed_ShouldValueToStart(int value, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -75,6 +86,7 @@ namespace List.Tests
         [TestCase(7, 0, new int[] { 1, 2, 3 }, new int[] { 7, 1, 2, 3 })]
         [TestCase(5, 1, new int[] { 1, 2, 3 }, new int[] { 1, 5, 2, 3 })]
         [TestCase(3, 2, new int[] { 1, 2, 3, 4 }, new int[] { 1, 2, 3, 3, 4 })]
+        [TestCase(3,0, new int[] { }, new int[] { 3 })]
         public void AddValueByIndex_WhenValueAndIndexPassed_ShouldAddValueByIndex(int value, int index, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -100,6 +112,8 @@ namespace List.Tests
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 1, 2 })]
         [TestCase(new int[] { 8, 6, 5 }, new int[] { 8, 6 })]
         [TestCase(new int[] { 10, 8, 4 }, new int[] { 10, 8 })]
+        [TestCase(new int[] { 10, 8 }, new int[] { 10 })]
+        [TestCase(new int[] { 10 }, new int[] { })]
         public void RemoveOneElementFromLast_WhenMethodCalledPassed_ShouldRemoveLast(int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -123,6 +137,7 @@ namespace List.Tests
         [TestCase(new int[] { 1, 2, 3 }, new int[] { 2, 3 })]
         [TestCase(new int[] { 9, 6, 3 }, new int[] { 6, 3 })]
         [TestCase(new int[] { 12, 6, 3 }, new int[] { 6, 3 })]
+        [TestCase(new int[] { 10 }, new int[] { })]
         public void RemoveOneElementFromStart_WhenMethodCalledPassed_ShouldRemoveFirstElem(int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -146,6 +161,9 @@ namespace List.Tests
         [TestCase(0, new int[] { 7, 1, 2, 3 }, new int[] { 1, 2, 3 })]
         [TestCase(1, new int[] { 1, 6, 2, 3 }, new int[] { 1, 2, 3 })]
         [TestCase(2, new int[] { 1, 2, 5, 3, }, new int[] { 1, 2, 3 })]
+        [TestCase(3, new int[] { 1, 2, 5, 3, }, new int[] { 1, 2, 5 })]
+        [TestCase(0, new int[] { 10 }, new int[] { })]
+        [TestCase(0, new int[] { 10, 25 }, new int[] { 25 })]
         public void RemoveOneElementByIndex_WhenElementPassed_ShouldRemoveElement(int index, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -169,6 +187,7 @@ namespace List.Tests
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4 })]
         [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3 })]
         [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2 })]
+        [TestCase(3, new int[] { 1, 2, 3 }, new int[] {  })]
         public void Remove_NElementsFromLast_WhenNElementsPassed_ShouldRemoveNElements(int nvalue, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -204,6 +223,7 @@ namespace List.Tests
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 2, 3, 4, 5 })]
         [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 3, 4, 5 })]
         [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 4, 5 })]
+        [TestCase(3, new int[] { 1, 2, 3}, new int[] { })]
         public void RemoveNElementsFromStart_WhenNElementsPassed_ShouldRemoveNElements(int nvalue, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -238,6 +258,7 @@ namespace List.Tests
         [TestCase(0, 0, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
         [TestCase(1, 1, new int[] { 1, 2, 3 }, new int[] { 1, 3 })]
         [TestCase(2, 2, new int[] { 1, 2, 3, 4 }, new int[] { 1, 2 })]
+        [TestCase(2, 0, new int[] { 1, 2 }, new int[] { })]
         public void RemoveNElementsByIndex_WhenIndexAndNElementsPassed_ShouldRemoveByIndexNElements(int nvalue, int index, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.Create(actualArray);
@@ -271,7 +292,8 @@ namespace List.Tests
         [TestCase(2, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 1)]
         [TestCase(10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, -1)]
         [TestCase(1, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 0)]
-        [TestCase(8, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 7)]
+        [TestCase(8, new int[] { 8, 2, 3, 4, 5, 6, 7, 8 }, 0)]
+        [TestCase(12, new int[] { 8, 2, 3, 4, 5, 6, 7, 12}, 7)]
         public void GetFirstIndexByValue_WhenValuePassed_ShouldReturnIndex(int value, int[] actualArray, int expected)
         {
             ArrayList array = ArrayList.Create(actualArray);
@@ -417,7 +439,7 @@ namespace List.Tests
         [TestCase(new int[] { }, new int[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
         public void AddListFromLast_WhenListPassed_ShouldAddListInLast(int[] actualArray, int[] arrayForList, int[] expectedArray)
         {
-            ArrayList actual =  ArrayList.Create(actualArray);
+            ArrayList actual = ArrayList.Create(actualArray);
             ArrayList list = ArrayList.Create(arrayForList);
             ArrayList expectedArrayList = ArrayList.Create(expectedArray);
 
@@ -427,6 +449,8 @@ namespace List.Tests
         }
 
         [TestCase(new int[] { 5, 10, 15, 30 }, new int[] { })]
+        [TestCase(new int[] { 5, 1 }, new int[] { })]
+        [TestCase(new int[] { 5 }, new int[] { })]
         public void AddListFromLast_WhenListPassed_ShouldArgumentException(int[] actualArray, int[] arrayForList)
         {
             Assert.Throws<ArgumentException>(() =>
@@ -487,6 +511,18 @@ namespace List.Tests
                 ArrayList list = ArrayList.Create(arrayForList);
                 actual.AddListByIndex(list, index);
             });
+        }
+
+        [TestCase(new int[] {2, 4, 6}, "2 4 6 ")]
+        [TestCase(new int[] {5}, "5 ")]
+        [TestCase(new int[] {}, "")]
+        public void ToString_WhenArrayListPassed_ShouldString(int[] array, string expected)
+        {
+            ArrayList arrayList = ArrayList.Create(array);
+
+            string actual = arrayList.ToString();
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

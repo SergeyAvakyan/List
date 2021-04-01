@@ -481,7 +481,6 @@ namespace List
 
             }
 
-            result.Trim();
             return result;
         }
     }
