@@ -1,32 +1,39 @@
 ﻿using System;
+using System.Text;
 
 namespace List
 {
     public class ArrayList
     {
-        public int Length { get; private set; }
         private int[] _array;
+
+        public int Length { get; private set; }
+
         public ArrayList()
         {
             Length = 0;
             _array = new int[10];
         }
+
         public ArrayList(int value)
         {
             Length = 1;
             _array = new int[10];
             _array[0] = value;
         }
+
         private ArrayList(int[] array)
         {
             Length = array.Length;
 
             _array = new int[Length];
+
             for (int i = 0; i < Length; i++)
             {
                 _array[i] = array[i];
-            } 
+            }
         }
+
         public static ArrayList Create(int[] array)
         {
             if (!(array is null))
@@ -36,6 +43,7 @@ namespace List
 
             throw new NullReferenceException("Values is null");
         }
+
         public int this[int index]
         {
             get
@@ -61,28 +69,33 @@ namespace List
                 }
             }
         }
+
         public void Add(int value)
         {
             if (Length >= _array.Length)
             {
                 Resize();
             }
-            _array[Length] = value;
-            ++Length;
+
+            _array[Length++] = value;
         }
+
         public void AddValueToStrart(int value)
         {
             if (Length >= _array.Length)
             {
                 Resize();
             }
+
             for (int i = Length - 1; i >= 0; i--)
             {
                 _array[i + 1] = _array[i];
             }
+
             _array[0] = value;
             ++Length;
         }
+
         public void AddValueByIndex(int value, int index)
         {
             if (index <= Length && index >= 0)
@@ -96,6 +109,7 @@ namespace List
                 {
                     _array[i + 1] = _array[i];
                 }
+
                 _array[index] = value;
                 ++Length;
             }
@@ -104,6 +118,7 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
+
         public void RemoveOneElementFromLast()
         {
             if (!(Length == 0))
@@ -114,19 +129,20 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
+
             Resize();
-            
         }
+
         public void RemoveOneElementFromStart()
         {
-            
             for (int i = 1; i < Length; i++)
             {
                 _array[i - 1] = _array[i];
             }
+
             Resize();
 
-            if (!(Length == 0))
+            if (Length != 0)
             {
                 Length--;
             }
@@ -134,8 +150,8 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-
         }
+
         public void RemoveOneElementByIndex(int index)
         {
             if (index < Length && index >= 0)
@@ -151,6 +167,7 @@ namespace List
                 else
                 {
                     Length--;
+
                     for (int i = index; i < Length; i++)
                     {
                         _array[i] = _array[i + 1];
@@ -164,6 +181,7 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
+
         public void RemoveNElementsFromLast(int nvalue)
         {
             if (nvalue < Length)
@@ -188,6 +206,7 @@ namespace List
                 throw new IndexOutOfRangeException("Index out of range!");
             }
         }
+
         public void RemoveNElementsFromStart(int nvalue)
         {
             if (nvalue < Length)
@@ -198,6 +217,7 @@ namespace List
                     {
                         _array[i - nvalue] = _array[i];
                     }
+
                     Length -= nvalue;
                     Resize();
                 }
@@ -215,36 +235,54 @@ namespace List
             {
                 throw new IndexOutOfRangeException("Index out of range!");
             }
-        } 
-        public void RemoveNElementsByIndex(int nvalue, int Index)
+        }
+
+        public void RemoveNElementsByIndex(int count, int index)
         {
-            if (nvalue < Length)
+            if (Length == 0)
             {
-                if (!(nvalue < 0))
+                throw new InvalidOperationException("The list is empty");
+            }
+            if (index >= Length || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if (count >= Length)
+            {
+                Length = Length - (Length - index);
+
+                Resize();
+            }
+            else if (count == 0)
+            {
+                return;
+            }
+            else
+            {
+                for (int i = index; i < Length; i++)
                 {
-                    for (int i = Index + nvalue; i < Length; i++)
+                    if (i + count >= Length)
                     {
-                        _array[i - nvalue] = _array[i];
+                        break;
                     }
 
-                    Length -= nvalue;
-                    Resize();
+                    _array[i] = _array[i + count];
+                }
+
+                if (Length - index < count)
+                {
+                    Length = Length - (Length - index);
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid value");
+                    Length = Length - count;
                 }
+
+                Resize();
             }
-            else if (nvalue == Length)
-            {
-                Length = 0;
-                _array = new int[10];
-            }
-            else
-                {
-                    throw new IndexOutOfRangeException("Index out of range!");
-                }
-            }
+        }
+
         public int GetFirstIndexByValue(int value)
         {
             for (int i = 0; i < Length; i++)
@@ -255,26 +293,21 @@ namespace List
                 }
             }
 
-           return -1;
+            return -1;
         }
+
         public void GetReverse()
         {
-            int temp;
-            int swapIndex;
-
             for (int i = 0; i < Length / 2; i++)
             {
-                swapIndex = Length - i - 1;
-                temp = _array[i];
-                _array[i] = _array[swapIndex];
-                _array[swapIndex] = temp;
+                Swap(ref _array[i], ref _array[Length - i - 1]);
             }
         }
+
         public int GetIndexOfMaxElement()
         {
             if (!(Length == 0))
             {
-
                 int maxIndexOfElement = 0;
 
                 for (int i = 1; i < Length; i++)
@@ -292,6 +325,7 @@ namespace List
                 throw new ArgumentException();
             }
         }
+
         public int GetIndexOfMinElement()
         {
             if (!(Length == 0))
@@ -314,14 +348,17 @@ namespace List
                 throw new ArgumentException("Empty list");
             }
         }
+
         public int GetValueMaxElement()
         {
-            return GetIndexOfMaxElement();
+            return _array[GetIndexOfMaxElement()];
         }
+    
         public int GetValueMinElement()
         {
-            return GetIndexOfMinElement();
+            return _array[GetIndexOfMinElement()];
         }
+    
         public void GetSortAscending()
         {
             int j;
@@ -341,6 +378,7 @@ namespace List
                 _array[j] = temp;
             }
         }
+
         public void GetDescendingSort()
         {
             int j;
@@ -406,10 +444,10 @@ namespace List
         {
             if (list != null && list.Length != 0)
             {
-                if (index >= 0 && index <= Length)
+                if (index >= 0 && index < Length)
                 {
                     Length += list.Length;
-                        Resize();
+                    Resize();
                     int tempLength = list.Length;
                     for (int i = Length - 1; i >= index; i--)
                     {
@@ -428,7 +466,6 @@ namespace List
                         }
                     }
                 }
-
                 else
                 {
                     throw new IndexOutOfRangeException();
@@ -439,6 +476,7 @@ namespace List
                 throw new ArgumentException("Empty list");
             }
         }
+
         private void Resize()
         {
             if (Length >= _array.Length)
@@ -455,33 +493,58 @@ namespace List
             }
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object obj)//
         {
-            ArrayList list = (ArrayList)obj;
-            if (this.Length != list.Length)
+            if (obj is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            ArrayList List = (ArrayList)obj;
+            if (this.Length != List.Length)
             {
                 return false;
             }
 
             for (int i = 0; i < Length; i++)
             {
-                if (this._array[i] != list._array[i])
+                if (this._array[i] != List._array[i])
                 {
                     return false;
                 }
             }
+
             return true;
         }
+
         public override string ToString()
         {
-            string result = string.Empty;
+            StringBuilder result = new StringBuilder();
+
             for (int i = 0; i < Length; i++)
             {
-                result += _array[i] + " ";
-
+                if (i == Length - 1)
+                {
+                    result.Append(_array[i]);
+                }
+                else
+                {
+                    result.Append(_array[i] + " ");
+                }
             }
 
-            return result;
+            return result.ToString();
+        }
+        private void Swap(ref int a, ref int b)
+        {
+            int tempValue = a;
+            a = b;
+            b = tempValue;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Length, _array);
         }
     }
 }

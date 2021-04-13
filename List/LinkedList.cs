@@ -1,71 +1,85 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace List
 {
     public class LinkedList
     {
+        private Node _root;
+        private Node _tail;
+
         public int Length { get; private set; }
+
         public int this[int index]
         {
             get
             {
+                if (index < 0 || index >= Length)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
                 Node current = _root;
 
                 for (int i = 1; i <= index; i++)
                 {
                     current = current.Next;
                 }
+
                 return current.Value;
             }
             set
             {
+                if (index < 0 || index >= Length)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
                 Node current = _root;
 
                 for (int i = 1; i <= index; i++)
                 {
                     current = current.Next;
                 }
+
                 current.Value = value;
             }
         }
 
-        private Node _root;
-        private Node _tail;
         public LinkedList()
         {
             Length = 0;
             _root = null;
             _tail = null;
         }
+
         public LinkedList(int value)
         {
             Length = 1;
             _root = new Node(value);
             _tail = _root;
         }
+
         private LinkedList(int[] values)
         {
-                Length = values.Length;
+            Length = values.Length;
 
-                if (values.Length != 0)
-                {
-                    _root = new Node(values[0]);
-                    _tail = _root;
+            if (values.Length != 0)
+            {
+                _root = new Node(values[0]);
+                _tail = _root;
 
-                    for (int i = 1; i < values.Length; i++)
-                    {
-                        _tail.Next = new Node(values[i]);
-                        _tail = _tail.Next;
-                    }
-                }
-                else
+                for (int i = 1; i < values.Length; i++)
                 {
-                    _root = null;
-                    _tail = null;
+                    _tail.Next = new Node(values[i]);
+                    _tail = _tail.Next;
                 }
             }
+            else
+            {
+                _root = null;
+                _tail = null;
+            }
+        }
         public static LinkedList Create(int[] values)
         {
             if (!(values is null))
@@ -108,7 +122,8 @@ namespace List
                 Length++;
             }
         }
-            public void AddValueByIndex(int value, int index)
+
+        public void AddValueByIndex(int value, int index)
         {
             if (index >= 0 && index <= Length)
             {
@@ -143,18 +158,33 @@ namespace List
             }
 
         }
+
         public void RemoveOneElementFromLast()
         {
             RemoveOneElementByIndex(Length - 1);
         }
+
         public void RemoveOneElementFromStart()
         {
-            _root = _root.Next;
-            Length--;
+            if (Length == 0)
+            {
+                throw new InvalidOperationException("The list is empty");
+            }
+            else if (Length == 1)
+            {
+                _root = null;
+            }
+            else
+            {
+                _root = _root.Next;
+            }
+
+            --Length;
         }
+
         public void RemoveOneElementByIndex(int index)
         {
-            if (index >= 0 && index <= Length)
+            if (index >= 0 && index < Length)
             {
                 if (Length != 0)
                 {
@@ -188,6 +218,7 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
+
         public void RemovNElementsFromLast(int nvalue) 
         {
             if (nvalue < Length)
@@ -215,6 +246,7 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
+
         public void RemoveNElementsFromStart(int nvalue)
         {
             if (nvalue < Length)
@@ -242,6 +274,7 @@ namespace List
                 throw new IndexOutOfRangeException("Out of range!");
             }
         }
+
         public void RemoveNElementsByIndex(int nvalue, int index)
         {
             if (index >= 0 && index < Length)
@@ -250,7 +283,7 @@ namespace List
                 {
                     RemoveNElementsFromStart(nvalue);
                 }
-                else if (nvalue == Length - 1)
+                else if (index == Length - 1)
                 {
                     RemovNElementsFromLast(nvalue);
                 }
@@ -284,9 +317,10 @@ namespace List
                 throw new IndexOutOfRangeException();
             }
         }
+
         public void GetChangeByIndex(int index, int value)
         {
-            if (index >= 0 && index <= Length)
+            if (index >= 0 && index < Length)
             {
                 Node current = GetNodeByIndex(index);
 
@@ -296,8 +330,8 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-
         }
+
         public int GetFirstIndexByValue(int value)
         {
             Node current = _root;
@@ -314,6 +348,7 @@ namespace List
 
             return -1;
         }
+
         public void Revers()
         {
             if (!(this is null))
@@ -329,6 +364,7 @@ namespace List
                         prev = current;
                         current = next;
                     }
+
                     _tail = _root;
                     _root = prev;
                 }
@@ -344,9 +380,10 @@ namespace List
                 throw new NullReferenceException();
             }
         }
+
         public int GetIndexMaxElement()
         {
-            if (Length != 0 || this is null)
+            if (Length != 0)
             {
                 Node current = _root;
                 int maxIndex = 0;
@@ -370,9 +407,10 @@ namespace List
                 throw new ArgumentException("List is null");
             }
         }
+
         public int GetIndexOfMinElement()
         {
-            if (Length != 0 || this is null)
+            if (Length != 0)
             {
                 Node current = _root;
                 int minIndex = 0;
@@ -396,14 +434,16 @@ namespace List
                 throw new ArgumentException("List is null");
             }
         }
+
         public int GetValueMaxElement()
         {
-            return GetIndexMaxElement();
+            return GetNodeByIndex(GetIndexMaxElement()).Value;
         }
         public int GetValueMinElement()
         {
-            return GetIndexOfMinElement();
+            return GetNodeByIndex(GetIndexOfMinElement()).Value;
         }
+
         public void GetSortAscending()
         {
             for (int i = 0; i < Length; i++)
@@ -417,11 +457,13 @@ namespace List
                         min = j;
                     }
                 }
+
                 int temp = GetNodeByIndex(i).Value;
                 GetNodeByIndex(i).Value = GetNodeByIndex(min).Value;
                 GetNodeByIndex(min).Value = temp;
             }
         }
+
         public void GetDescendingSort()
         {
             for (int i = 0; i < Length; i++)
@@ -441,6 +483,7 @@ namespace List
                 GetNodeByIndex(max).Value = temp;
             }
         }
+
         public void RemoveByValueFirst(int value)
         {
             int index = GetFirstIndexByValue(value);
@@ -450,6 +493,7 @@ namespace List
                 RemoveOneElementByIndex(index);
             }
         }
+
         public void RemoveByValueAll(int value)
         {
             int indexOfElements = GetFirstIndexByValue(value);
@@ -460,6 +504,7 @@ namespace List
                 indexOfElements = GetFirstIndexByValue(value);
             }
         }
+
         public void AddListToTheEnd(LinkedList secondList)
         {
             if (Length != 0)
@@ -483,6 +528,7 @@ namespace List
                 Length = secondList.Length;
             }
         }
+
         public void AddListToStart(LinkedList secondList)
         {
             if (Length != 0)
@@ -513,7 +559,7 @@ namespace List
         {
             if (!(secondList is null) && secondList.Length != 0)
             {
-                if (index >= 0 && index <= Length)
+                if (index >= 0 && index < Length)
                 {
                     if (Length != 0)
                     {
@@ -531,7 +577,7 @@ namespace List
                             Length += secondList.Length;
                         }
                     }
-                    else
+                    else//
                     {
                         _root = secondList._root;
                         _tail = secondList._tail;
@@ -549,6 +595,7 @@ namespace List
                 throw new ArgumentException("No elements in list!");
             }
         }
+
         public override string ToString()
         {
             if (Length != 0)
@@ -569,6 +616,7 @@ namespace List
                 return String.Empty;
             }
         }
+
         public override bool Equals(object obj)
         {
             if (obj is LinkedList || obj is null)
@@ -587,15 +635,18 @@ namespace List
                             isEqual = false;
                             break;
                         }
+
                         currentThis = currentThis.Next;
                         currentList = currentList.Next;
                     }
                 }
+
                 return isEqual;
             }
 
             throw new ArgumentException("obj is not List");
         }
+
         private Node GetNodeByIndex(int index)
         {
             Node current = _root;
@@ -604,7 +655,13 @@ namespace List
             {
                 current = current.Next;
             }
+
             return current;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Length, _root, _tail);
         }
     }
 }

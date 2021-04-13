@@ -358,9 +358,9 @@ namespace List.Tests
             });
         }
 
-        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 7)]
-        [TestCase(new int[] { 3, 5, -2, 28, 16 }, 3)]
-        [TestCase(new int[] { 6, 4, -8, 14, 19 }, 4)]
+        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 },8)]
+        [TestCase(new int[] { 3, 5, -2, 28, 16 }, 28)]
+        [TestCase(new int[] { 6, 4, -8, 14, 19 }, 19)]
         public void GetValueMaxElement_WhenMethodCalledPassed_ShouldReturnMaxElement(int[] actualArray, int expected)
         {
             ArrayList list = ArrayList.Create(actualArray);
@@ -369,9 +369,9 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 0)]
-        [TestCase(new int[] { 3, 5, -2, 28, 16 }, 2)]
-        [TestCase(new int[] { 3, 5, 58, 21, 19 }, 0)]
+        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 1)]
+        [TestCase(new int[] { 3, 5, -2, 28, 16 }, -2)]
+        [TestCase(new int[] { 3, 5, 58, 21, 19 }, 3)]
         public void GetValueMinElement_WhenMethodCalledPassed_ShouldReturnMaxElement(int[] actualArray, int expected)
         {
             ArrayList list = ArrayList.Create(actualArray);
@@ -513,8 +513,8 @@ namespace List.Tests
             });
         }
 
-        [TestCase(new int[] {2, 4, 6}, "2 4 6 ")]
-        [TestCase(new int[] {5}, "5 ")]
+        [TestCase(new int[] {2, 4, 6}, "2 4 6")]
+        [TestCase(new int[] {5}, "5")]
         [TestCase(new int[] {}, "")]
         public void ToString_WhenArrayListPassed_ShouldString(int[] array, string expected)
         {

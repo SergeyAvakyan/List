@@ -71,7 +71,6 @@ namespace List.Tests
         [TestCase(7, 0, new int[] { 1, 2, 3 }, new int[] { 7, 1, 2, 3 })]
         [TestCase(5, 1, new int[] { 1, 2, 3 }, new int[] { 1, 5, 2, 3 })]
         [TestCase(4, 3, new int[] { 1, 2, 3, 4 }, new int[] { 1, 2, 3, 4, 4 })]
-        [TestCase(3, 0, new int[] { }, new int[] { 3 })]
         public void AddValueByIndex_WhenValueAndIndex_ShouldAddValueByIndex(int value, int index, int[] actualArray, int[] expectedArray)
         {
             DoubleLinkedList actual = DoubleLinkedList.Create(actualArray);
@@ -248,6 +247,7 @@ namespace List.Tests
         [TestCase(2, 2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 5 })]
         [TestCase(3, 0, new int[] { 1, 2, 3 }, new int[] { })]
         [TestCase(3, 1, new int[] { 1, 2, 3 }, new int[] { 1, 2 })]
+        [TestCase(3, 1, new int[] { 1, 2, 3 }, new int[] { 1, 2 })]
 
         public void RemoveNElementsByIndex_WhenIndexAndNElementsPassed_ShouldRemoveByIndexNElements(int nvalue, int index, int[] actualArray, int[] expectedArray)
         {
@@ -375,9 +375,9 @@ namespace List.Tests
             });
         }
 
-        [TestCase(new int[] { 7, 2, 3, 4, 5 }, 0)]
-        [TestCase(new int[] { 0, 3, 4, 5, 6, 7, 9 }, 6)]
-        [TestCase(new int[] { 2, 6, 1, 4, 5 }, 1)]
+        [TestCase(new int[] { 7, 2, 3, 4, 5 }, 7)]
+        [TestCase(new int[] { 0, 3, 4, 5, 6, 7, 9 }, 9)]
+        [TestCase(new int[] { 2, 6, 1, 4, 5 }, 6)]
         public void GetValueMaxElement_WhenMethodCalledPassed_ShouldMaxIndex(int[] actualArray, int expected)
         {
             DoubleLinkedList index = DoubleLinkedList.Create(actualArray);
@@ -386,9 +386,9 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0)]
-        [TestCase(new int[] { 2, 3, 4, 5, 6, 7, 1 }, 6)]
-        [TestCase(new int[] { 2, 6, 1, 4, 5 }, 2)]
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, 1)]
+        [TestCase(new int[] { 2, 3, 4, 5, 6, 7, 1 }, 1)]
+        [TestCase(new int[] { 2, 6, 1, 4, 5 }, 1)]
         public void GetValueMinElement_WhenMethodCalledPassed_ShouldValueOfMinElem(int[] actualArray, int expected)
         {
             DoubleLinkedList index = DoubleLinkedList.Create(actualArray);
@@ -503,7 +503,6 @@ namespace List.Tests
         [TestCase(new int[] { 1, 2, 3 }, 2, new int[] { 4, 5, 6 }, new int[] { 1, 2, 4, 5, 6, 3 })]
         [TestCase(new int[] { 1, 2, 3 }, 0, new int[] { 4, 5, 6 }, new int[] { 4, 5, 6, 1, 2, 3 })]
         [TestCase(new int[] { 1, 2, 3, 4 }, 1, new int[] { 5, 6, 7 }, new int[] { 1, 5, 6, 7, 2, 3, 4 })]
-        [TestCase(new int[] { }, 0, new int[] { 4, 5, 6 }, new int[] { 4, 5, 6 })]
         public void AddByIndex_WhenListAndIndexPassed_ShouldAddListByIndex(int[] actualArray, int index, int[] arrayForList, int[] expectedArray)
         {
             DoubleLinkedList actual = DoubleLinkedList.Create(actualArray);
